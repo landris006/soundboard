@@ -11,18 +11,23 @@ fn main() {
     }
 
     if args[1] == "ls" {
-        let files = fs::read_dir("sounds")
-            .unwrap()
-            .map(|file| {
-                file.unwrap()
-                    .path()
-                    .file_stem()
-                    .unwrap()
-                    .to_str()
-                    .unwrap()
-                    .to_string()
-            })
-            .collect::<Vec<String>>();
+        let files = match fs::read_dir("sounds") {
+            Ok(files) => files
+                .map(|file| {
+                    file.unwrap()
+                        .path()
+                        .file_stem()
+                        .unwrap()
+                        .to_str()
+                        .unwrap()
+                        .to_string()
+                })
+                .collect::<Vec<String>>(),
+            Err(_) => {
+                println!("No sound files found, make sure to put a folder named 'sounds' next to this executable,\ninside the folder put .mp3 files! (e.g. 'example_sound.mp3')");
+                return;
+            }
+        };
 
         if files.len() == 0 {
             println!("No sound files found, make sure to put a folder named 'sounds' next to this executable,\ninside the folder put .mp3 files! (e.g. 'example_sound.mp3')");
