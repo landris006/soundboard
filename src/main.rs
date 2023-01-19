@@ -6,7 +6,7 @@ use std::{env, process};
 fn main() {
     let args: Vec<String> = env::args().collect();
     if args.len() != 2 {
-        println!("This program takes exactly one argument!");
+        println!("This program takes exactly one argument, try 'ls'!");
         return;
     }
 
